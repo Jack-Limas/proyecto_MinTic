@@ -1,5 +1,4 @@
 import pandas as pd
-import psycopg2
 from sqlalchemy import create_engine
 import os
 from dotenv import load_dotenv
@@ -31,7 +30,8 @@ def cargar_tabla(nombre_archivo, nombre_tabla):
     try:
         df = pd.read_csv(
             f"{CLEAN_PATH}/{nombre_archivo}.csv",
-            low_memory=False
+            low_memory=False,
+            encoding="utf-8-sig"
         )
         df.to_sql(
             nombre_tabla,
@@ -50,4 +50,4 @@ def main():
     print("\n=== CARGA FINALIZADA ===")
 
 if __name__ == "__main__":
-    main() 
+    main()
