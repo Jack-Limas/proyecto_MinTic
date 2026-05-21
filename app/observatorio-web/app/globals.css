@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-background: #0F1117;
+  --color-surface: #1A1D2E;
+  --color-card: #1E2235;
+  --color-turismo: #10B981;
+  --color-cultura: #A855F7;
+  --color-movilidad: #3B82F6;
+  --color-amber: #F59E0B;
+  --color-textprimary: #F1F5F9;
+  --color-textsecondary: #94A3B8;
+  --font-family-sans: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background-color: #0F1117;
+  color: #F1F5F9;
+  font-family: 'Inter', sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #1A1D2E; }
+::-webkit-scrollbar-thumb { background: #3B82F6; border-radius: 3px; }
+
+/* ── Glass card dark (default) ── */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+/* ── Fondo de página ── */
+.page-bg {
+  background-color: #0F1117;
+}
+
+/* ── Texto principal de página ── */
+.page-title {
+  color: #F1F5F9;
+}
+
+.page-text {
+  color: #94A3B8;
+}
+
+/* ══════════════════════════════
+   MODO CLARO
+══════════════════════════════ */
+html.light body {
+  background-color: #F1F5F9;
+  color: #0F172A;
+}
+
+html.light .page-bg {
+  background-color: #F1F5F9 !important;
+}
+
+html.light .glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.06);
+}
+
+html.light nav {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+html.light footer {
+  background-color: #FFFFFF !important;
+  border-color: rgba(0, 0, 0, 0.08) !important;
+}
+
+/* Textos generales */
+html.light .page-title { color: #0F172A !important; }
+html.light .page-text  { color: #475569 !important; }
+
+/* Títulos hardcodeados en white */
+html.light h1,
+html.light h2,
+html.light h3 { color: #0F172A; }
+
+/* Textos secundarios */
+html.light .text-textsecondary { color: #475569 !important; }
+
+/* Cards de indicadores — texto interno */
+html.light .glass-card h3 { color: #0F172A !important; }
+html.light .glass-card p  { color: #475569 !important; }
+html.light .glass-card span { color: #64748B !important; }
+
+/* Bordes internos de cards */
+html.light .border-white\/10 { border-color: rgba(0,0,0,0.08) !important; }
+
+/* Badge "Colombia · Datos Abiertos" */
+html.light .bg-turismo\/10 { background-color: rgba(16,185,129,0.12) !important; }
+html.light .bg-cultura\/10 { background-color: rgba(168,85,247,0.12) !important; }
+html.light .bg-movilidad\/10 { background-color: rgba(59,130,246,0.12) !important; }
+
+/* Scrollbar modo claro */
+html.light ::-webkit-scrollbar-track { background: #E2E8F0; }
+
+/* Navbar texto */
+html.light .text-slate-400 { color: #475569 !important; }
+html.light .text-white { color: #0F172A !important; }
