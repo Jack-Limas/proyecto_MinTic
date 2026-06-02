@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-hotel-navy: #1B3A5C;
+  --color-hotel-navy-dark: #0F2340;
+  --color-hotel-navy-light: #2E5F8A;
+  --color-hotel-gold: #C9A84C;
+  --color-hotel-gold-light: #E8C76A;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: 'Inter', sans-serif; background: #f1f5f9; }

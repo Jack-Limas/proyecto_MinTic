@@ -1,0 +1,99 @@
+<div class="space-y-6">
+  <h1 class="text-2xl font-bold text-[#1B3A5C]">Dashboard</h1>
+
+  @if (loading) {
+    <div class="flex justify-center items-center h-48">
+      <svg class="animate-spin h-10 w-10 text-[#C9A84C]" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+      </svg>
+    </div>
+  }
+
+  @if (!loading) {
+    <!-- Tarjetas: fondo blanco, borde izquierdo de color -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-blue-500 flex items-center gap-4">
+        <span class="text-4xl text-blue-500">👥</span>
+        <div>
+          <p class="text-3xl font-bold text-blue-600">{{ totalHuespedes }}</p>
+          <p class="text-sm text-gray-600 font-medium">Total Huéspedes</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-green-500 flex items-center gap-4">
+        <span class="text-4xl text-green-500">🛏️</span>
+        <div>
+          <p class="text-3xl font-bold text-green-600">{{ totalHabitaciones }}</p>
+          <p class="text-sm text-gray-600 font-medium">Total Habitaciones</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-yellow-500 flex items-center gap-4">
+        <span class="text-4xl text-yellow-500">✅</span>
+        <div>
+          <p class="text-3xl font-bold text-yellow-600">{{ habitacionesDisponibles }}</p>
+          <p class="text-sm text-gray-600 font-medium">Disponibles</p>
+        </div>
+      </div>
+
+      <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-red-500 flex items-center gap-4">
+        <span class="text-4xl text-red-500">📅</span>
+        <div>
+          <p class="text-3xl font-bold text-red-600">{{ totalReservas }}</p>
+          <p class="text-sm text-gray-600 font-medium">Total Reservas</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Últimas reservas -->
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+      <div class="p-5 border-b border-gray-100">
+        <h2 class="font-semibold text-[#1B3A5C] text-lg">Últimas Reservas</h2>
+      </div>
+
+      @if (ultimasReservas.length === 0) {
+        <p class="text-gray-400 text-center py-10">No hay reservas registradas.</p>
+      }
+
+      @if (ultimasReservas.length > 0) {
+        <div class="overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead class="bg-gray-50">
+              <tr>
+                <th class="text-left p-3 font-semibold text-gray-600">ID</th>
+                <th class="text-left p-3 font-semibold text-gray-600">Inicio</th>
+                <th class="text-left p-3 font-semibold text-gray-600">Fin</th>
+                <th class="text-left p-3 font-semibold text-gray-600">Estado</th>
+                <th class="text-left p-3 font-semibold text-gray-600">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (r of ultimasReservas; track r.idReserva) {
+                <tr class="border-t hover:bg-gray-50 transition">
+                  <td class="p-3 text-gray-500">#{{ r.idReserva }}</td>
+                  <td class="p-3">{{ r.fechaInicio }}</td>
+                  <td class="p-3">{{ r.fechaFin }}</td>
+                  <td class="p-3">
+                    <span class="px-2 py-1 rounded-full text-xs font-medium"
+                      [class.bg-green-100]="r.estado === 'CONFIRMADA'"
+                      [class.text-green-700]="r.estado === 'CONFIRMADA'"
+                      [class.bg-blue-100]="r.estado === 'CHECKIN'"
+                      [class.text-blue-700]="r.estado === 'CHECKIN'"
+                      [class.bg-gray-100]="r.estado !== 'CONFIRMADA' && r.estado !== 'CHECKIN'"
+                      [class.text-gray-600]="r.estado !== 'CONFIRMADA' && r.estado !== 'CHECKIN'">
+                      {{ r.estado }}
+                    </span>
+                  </td>
+                  <td class="p-3 font-medium text-[#1B3A5C]">${{ r.totalEstimado | number:'1.2-2' }}</td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      }
+    </div>
+  }
+</div>

@@ -1,0 +1,47 @@
+<header class="bg-white shadow-sm flex items-center justify-between px-6 py-3 z-10 shrink-0">
+
+  <!-- Hamburger -->
+  <button (click)="toggleSidebar.emit()"
+          class="p-2 rounded-lg hover:bg-gray-100 transition text-gray-600 text-xl"
+          title="Toggle menú">☰</button>
+
+  <!-- Título -->
+  <h1 class="text-base font-semibold text-[#1B3A5C] hidden sm:block">
+    Sistema de Reservas de Hotel
+  </h1>
+
+  <!-- Derecha: timer + renovar + usuario + logout -->
+  <div class="flex items-center gap-3">
+
+    <!-- Timer JWT -->
+    <div class="flex items-center gap-1 text-sm" [ngClass]="timerClass">
+      <span class="text-base">⏱️</span>
+      <span class="font-mono">{{ formatTime(remainingTime) }}</span>
+    </div>
+
+    <!-- Renovar sesión -->
+    <button (click)="renovarSesion()"
+            [disabled]="renovando"
+            class="px-3 py-1.5 bg-[#C9A84C] hover:bg-[#B8972A] disabled:opacity-60
+                   text-white text-xs font-semibold rounded-lg transition flex items-center gap-1">
+      @if (renovando) {
+        <svg class="animate-spin h-3 w-3" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/>
+        </svg>
+      }
+      Renovar
+    </button>
+
+    <!-- Usuario -->
+    <div class="flex items-center gap-2 text-gray-700 text-sm">
+      <span class="text-lg">👤</span>
+      <span class="font-medium hidden md:block">{{ username }}</span>
+    </div>
+
+    <!-- Logout -->
+    <button (click)="logout()"
+            class="p-2 rounded-lg hover:bg-red-50 text-red-400 hover:text-red-600 transition text-lg"
+            title="Cerrar sesión">🚪</button>
+  </div>
+</header>

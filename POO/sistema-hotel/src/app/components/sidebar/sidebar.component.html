@@ -1,0 +1,106 @@
+<!-- RECURSIVIDAD — estructura de árbol de 3 niveles -->
+<!-- El backend construyó este árbol recursivamente en MenuService.java -->
+<!-- construirHijos() recorrió OpcionMenu padre→hijos hasta agotar niveles -->
+
+<nav class="flex flex-col h-full bg-[#1B3A5C] w-[220px] min-h-screen transition-all duration-300"
+     [class.hidden]="!open">
+
+  <!-- ── Header ── -->
+  <div class="p-4 border-b border-[#2E5F8A] shrink-0">
+    <div class="flex items-center gap-2">
+      <span class="text-2xl">🏨</span>
+      <div>
+        <p class="text-[#C9A84C] font-bold text-sm leading-tight">Hotel Reservas</p>
+        <p class="text-gray-400 text-xs">Panel de Administración</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Menú recursivo ── -->
+  <div class="flex-1 overflow-y-auto py-2">
+
+    <!-- NIVEL 1: opciones raíz (agrupadores sin ruta) -->
+    @for (opcion of opciones; track opcion.id) {
+      <div class="mb-1">
+
+        <!-- Sin ruta → etiqueta de sección -->
+        @if (!opcion.ruta) {
+          <div class="px-4 py-1 text-gray-400 text-xs uppercase tracking-wider font-semibold mt-3 select-none">
+            {{ opcion.nombre }}
+          </div>
+        }
+
+        <!-- Con ruta y sin hijos → link directo nivel 1 -->
+        @if (opcion.ruta && !tieneHijos(opcion)) {
+          <a [routerLink]="opcion.ruta"
+             class="flex items-center px-4 py-2 text-sm transition-colors"
+             [ngClass]="isActive(opcion.ruta) ?
+               'bg-[#C9A84C] text-white font-semibold' :
+               'text-gray-300 hover:bg-[#2E5F8A] hover:text-white'">
+            {{ opcion.nombre }}
+          </a>
+        }
+
+        <!-- NIVEL 2: hijos del nivel 1 -->
+        @if (tieneHijos(opcion)) {
+          @for (hijo of opcion.hijos; track hijo.id) {
+
+            <!-- Hijo expandible (tiene nietos) -->
+            @if (tieneHijos(hijo)) {
+              <button (click)="toggleExpand(hijo.id)"
+                      class="w-full flex items-center justify-between px-4 py-2 text-white hover:bg-[#2E5F8A] transition-colors text-sm">
+                <span>{{ hijo.nombre }}</span>
+                <span class="text-xs transition-transform duration-200 inline-block"
+                      [class.rotate-90]="isExpanded(hijo.id)">▶</span>
+              </button>
+
+              <!-- NIVEL 3: nietos (navegables) -->
+              <!-- CASO BASE: tieneHijos() retorna false → recursión termina -->
+              @if (isExpanded(hijo.id)) {
+                <div class="bg-[#0F2340]">
+                  @for (nieto of hijo.hijos; track nieto.id) {
+                    <a [routerLink]="nieto.ruta"
+                       class="flex items-center px-8 py-2 text-sm transition-colors"
+                       [ngClass]="isActive(nieto.ruta) ?
+                         'bg-[#C9A84C] text-white font-semibold' :
+                         'text-gray-300 hover:bg-[#2E5F8A] hover:text-white'">
+                      {{ nieto.nombre }}
+                    </a>
+                  }
+                </div>
+              }
+            }
+
+            <!-- Hijo sin sub-hijos → link directo nivel 2 -->
+            @if (!tieneHijos(hijo) && hijo.ruta) {
+              <a [routerLink]="hijo.ruta"
+                 class="flex items-center px-4 py-2 text-sm transition-colors"
+                 [ngClass]="isActive(hijo.ruta) ?
+                   'bg-[#C9A84C] text-white font-semibold' :
+                   'text-gray-300 hover:bg-[#2E5F8A] hover:text-white'">
+                {{ hijo.nombre }}
+              </a>
+            }
+
+          }
+        }
+
+      </div>
+    }
+  </div>
+
+  <!-- ── Footer: usuario + logout ── -->
+  <div class="p-4 border-t border-[#2E5F8A] shrink-0">
+    <div class="flex items-center gap-2 mb-3">
+      <div class="w-8 h-8 rounded-full bg-[#C9A84C] flex items-center justify-center text-white font-bold text-sm shrink-0">
+        {{ getInitial() }}
+      </div>
+      <span class="text-white text-sm truncate">{{ getUsername() }}</span>
+    </div>
+    <button (click)="logout()"
+            class="w-full py-1.5 bg-red-600 hover:bg-red-700 text-white text-xs rounded transition-colors">
+      Cerrar Sesión
+    </button>
+  </div>
+
+</nav>
